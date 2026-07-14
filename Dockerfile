@@ -7,8 +7,8 @@ RUN echo 'pcm.!default { type plug slave.pcm { type hw card 0 device 1 } }' > /e
 
 # System dependencies from sunfounder_tts
 # espeak -> espeak-ng for Debian 12+ compatibility
-RUN apt-get update && python -c "from urllib.request import urlretrieve; urlretrieve('https://raw.githubusercontent.com/sunfounder/sunfounder_tts/v1/docs/apt-requirements.txt', '/tmp/apt-reqs.txt')" \
-    && sed -i 's/^espeak$/espeak-ng/' /tmp/apt-reqs.txt \
+RUN apt-get update && apt-get install --fix-broken -y && python -c "from urllib.request import urlretrieve; urlretrieve('https://raw.githubusercontent.com/sunfounder/sunfounder_tts/v1/docs/apt-requirements.txt', '/tmp/apt-reqs.txt')" \
+    && sed -i 's/\bespeak\b/espeak-ng/' /tmp/apt-reqs.txt \
     && grep -v '^#' /tmp/apt-reqs.txt | grep -vE '^[[:space:]]*$' | xargs -r apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
