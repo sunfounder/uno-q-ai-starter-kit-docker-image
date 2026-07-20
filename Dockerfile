@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install --fix-broken -y && apt-get install -y --no
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python libraries from Git
+ARG CACHEBUST=0
 RUN python -m pip install --no-cache-dir \
     git+https://github.com/sunfounder/robot_shield.git@v1 \
     "sunfounder_stt[all] @ git+https://github.com/sunfounder/sunfounder_stt.git@v1" \
